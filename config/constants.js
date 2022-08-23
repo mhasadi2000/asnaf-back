@@ -1,8 +1,8 @@
 const READ_DATABASE_ADDRESS =
-  process.env.READ_DATABASE_ADDRESS || 'mongodb://localhost:27018';
+  process.env.READ_DATABASE_ADDRESS || 'mongodb://localhost:27017';
 
 const WRITE_DATABASE_ADDRESS =
-  process.env.READ_DATABASE_ADDRESS || 'mongodb://localhost:27019';
+  process.env.READ_DATABASE_ADDRESS || 'mongodb://localhost:27017';
 
 const PORT = process.env.PORT || 3000;
 
@@ -14,11 +14,14 @@ const MESSAGE_LIMIT =
 
 const CROSS = process.env.CROSS || ['http://localhost:3000'];
 
+const JWT_SECRET= 'pishrun-ansaf-api';
+
 module.exports = {
-  // READ_DATABASE_ADDRESS,
-  // WRITE_DATABASE_ADDRESS,
+  READ_DATABASE_ADDRESS,
+  WRITE_DATABASE_ADDRESS,
   PORT,
   COUNT_LIMITER,
   MESSAGE_LIMIT,
-  CROSS
+  CROSS,
+  JWT_SECRET
 };

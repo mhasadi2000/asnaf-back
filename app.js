@@ -8,15 +8,15 @@ const helmet = require('helmet');
 
 const app = express();
 const CROSS = 'http://localhost:3000';
-// const {
-//   read_connection,
-//   write_connection
-// } = require('./config/database/mongoConnection');
+const {
+  read_connection,
+  write_connection
+} = require('./config/database/mongoConnection');
 
 const { PORT, COUNT_LIMITER, MESSAGE_LIMIT } = require('./config/constants');
 
-// global.readConnection = read_connection;
-// global.writeConnection = write_connection;
+global.readConnection = read_connection;
+global.writeConnection = write_connection;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -34,7 +34,10 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // const readRoutes = require('./src/routes/read');
-const readRoutes = require('./src/routes/sms');
+const smsRoutes = require('./src/routes/sms');
+const otpRoutes = require('./src/routes/auth');
+const userRoutes = require('./src/routes/user');
+
 
 
 app.use((req, res, next) => {
@@ -59,7 +62,10 @@ app.use((req, res, next) => {
   else next();
 });
 
-app.use('/api/v1/users', readRoutes);
+app.use('/api/v1/sms', smsRoutes);
+app.use('/api/v1/otp', otpRoutes);
+app.use('/api/v1/users', userRoutes);
+
 
 app.use((err, req, res, next) => {
   if (err.status) res.status(err.status).json(err);
@@ -71,3 +77,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`listen on port ${PORT}`);
 });
+
+
+
+
